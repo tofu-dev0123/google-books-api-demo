@@ -12,10 +12,10 @@ Google Books API が返す JSON をそのまま受け取るための型定義。
 
 ```ts
 export type GoogleBooksResponse = {
-  kind: "books#volumes"
-  totalItems: number
-  items?: GoogleBooksVolume[]
-}
+  kind: "books#volumes";
+  totalItems: number;
+  items?: GoogleBooksVolume[];
+};
 ```
 
 > `items` は検索結果が 0 件のときフィールド自体が返されないため、オプショナルにしている。
@@ -26,17 +26,17 @@ export type GoogleBooksResponse = {
 
 ```ts
 export type GoogleBooksVolume = {
-  kind: "books#volume"
-  id: string
-  etag: string
-  selfLink: string
-  volumeInfo: VolumeInfo
-  saleInfo?: SaleInfo
-  accessInfo?: AccessInfo
+  kind: "books#volume";
+  id: string;
+  etag: string;
+  selfLink: string;
+  volumeInfo: VolumeInfo;
+  saleInfo?: SaleInfo;
+  accessInfo?: AccessInfo;
   searchInfo?: {
-    textSnippet?: string
-  }
-}
+    textSnippet?: string;
+  };
+};
 ```
 
 ### VolumeInfo
@@ -45,30 +45,30 @@ export type GoogleBooksVolume = {
 
 ```ts
 export type VolumeInfo = {
-  title: string
-  subtitle?: string
-  authors?: string[]
-  publisher?: string
-  publishedDate?: string
-  description?: string
-  industryIdentifiers?: IndustryIdentifier[]
-  pageCount?: number
-  categories?: string[]
-  averageRating?: number
-  ratingsCount?: number
-  imageLinks?: ImageLinks
-  language: string
-}
+  title: string;
+  subtitle?: string;
+  authors?: string[];
+  publisher?: string;
+  publishedDate?: string;
+  description?: string;
+  industryIdentifiers?: IndustryIdentifier[];
+  pageCount?: number;
+  categories?: string[];
+  averageRating?: number;
+  ratingsCount?: number;
+  imageLinks?: ImageLinks;
+  language: string;
+};
 
 export type IndustryIdentifier = {
-  type: "ISBN_10" | "ISBN_13" | "ISSN" | "OTHER"
-  identifier: string
-}
+  type: "ISBN_10" | "ISBN_13" | "ISSN" | "OTHER";
+  identifier: string;
+};
 
 export type ImageLinks = {
-  smallThumbnail?: string
-  thumbnail?: string
-}
+  smallThumbnail?: string;
+  thumbnail?: string;
+};
 ```
 
 ### SaleInfo
@@ -77,10 +77,10 @@ export type ImageLinks = {
 
 ```ts
 export type SaleInfo = {
-  country: string
-  saleability: "FOR_SALE" | "NOT_FOR_SALE" | "FREE"
-  isEbook: boolean
-}
+  country: string;
+  saleability: "FOR_SALE" | "NOT_FOR_SALE" | "FREE";
+  isEbook: boolean;
+};
 ```
 
 ### AccessInfo
@@ -89,10 +89,10 @@ export type SaleInfo = {
 
 ```ts
 export type AccessInfo = {
-  viewability: "NO_PAGES" | "PARTIAL" | "ALL_PAGES"
-  embeddable: boolean
-  publicDomain: boolean
-}
+  viewability: "NO_PAGES" | "PARTIAL" | "ALL_PAGES";
+  embeddable: boolean;
+  publicDomain: boolean;
+};
 ```
 
 ---
@@ -105,13 +105,13 @@ API レスポンスから必要なフィールドだけを抽出した、アプ�
 
 ```ts
 export type Book = {
-  id: string
-  title: string
-  authors?: string[]
-  description?: string
-  isbn?: string
-  thumbnail?: string
-}
+  id: string;
+  title: string;
+  authors?: string[];
+  description?: string;
+  isbn?: string;
+  thumbnail?: string;
+};
 ```
 
 ---
@@ -122,7 +122,7 @@ export type Book = {
 
 ```ts
 function toBook(item: GoogleBooksVolume): Book {
-  const v = item.volumeInfo
+  const v = item.volumeInfo;
 
   return {
     id: item.id,
@@ -131,7 +131,7 @@ function toBook(item: GoogleBooksVolume): Book {
     description: v.description,
     isbn: v.industryIdentifiers?.find((i) => i.type === "ISBN_13")?.identifier,
     thumbnail: v.imageLinks?.thumbnail,
-  }
+  };
 }
 ```
 
@@ -139,8 +139,8 @@ function toBook(item: GoogleBooksVolume): Book {
 
 ```ts
 function toBooks(response: GoogleBooksResponse): Book[] {
-  if (!response.items) return []
-  return response.items.map(toBook)
+  if (!response.items) return [];
+  return response.items.map(toBook);
 }
 ```
 
@@ -148,11 +148,11 @@ function toBooks(response: GoogleBooksResponse): Book[] {
 
 ## フィールド補足
 
-| Book のフィールド | 取得元 | 備考 |
-| --- | --- | --- |
-| `id` | `item.id` | 詳細取得 API のパスパラメータとして使用 |
-| `title` | `volumeInfo.title` | 必ず存在する |
-| `authors` | `volumeInfo.authors` | 存在しない書籍もある |
-| `description` | `volumeInfo.description` | HTML タグを含む場合がある。表示時にサニタイズを推奨 |
-| `isbn` | `volumeInfo.industryIdentifiers` | ISBN-13 を優先的に取得。見つからない場合は `undefined` |
-| `thumbnail` | `volumeInfo.imageLinks.thumbnail` | 画像がない書籍もある。プレースホルダー表示を推奨 |
+| Book のフィールド | 取得元                            | 備考                                                   |
+| ----------------- | --------------------------------- | ------------------------------------------------------ |
+| `id`              | `item.id`                         | 詳細取得 API のパスパラメータとして使用                |
+| `title`           | `volumeInfo.title`                | 必ず存在する                                           |
+| `authors`         | `volumeInfo.authors`              | 存在しない書籍もある                                   |
+| `description`     | `volumeInfo.description`          | HTML タグを含む場合がある。表示時にサニタイズを推奨    |
+| `isbn`            | `volumeInfo.industryIdentifiers`  | ISBN-13 を優先的に取得。見つからない場合は `undefined` |
+| `thumbnail`       | `volumeInfo.imageLinks.thumbnail` | 画像がない書籍もある。プレースホルダー表示を推奨       |

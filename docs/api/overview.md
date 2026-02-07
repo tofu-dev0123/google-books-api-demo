@@ -2,21 +2,21 @@
 
 ## 基本情報
 
-| 項目 | 内容 |
-| --- | --- |
-| プロトコル | REST |
-| データ形式 | JSON |
-| 認証方式 | API キー（公開データの取得） |
-| ベース URL | `https://www.googleapis.com/books/v1` |
+| 項目             | 内容                                                     |
+| ---------------- | -------------------------------------------------------- |
+| プロトコル       | REST                                                     |
+| データ形式       | JSON                                                     |
+| 認証方式         | API キー（公開データの取得）                             |
+| ベース URL       | `https://www.googleapis.com/books/v1`                    |
 | 公式ドキュメント | [Google Books APIs](https://developers.google.com/books) |
 
 ## エンドポイント一覧
 
-| エンドポイント | メソッド | 用途 | 使用頻度 |
-| --- | --- | --- | --- |
-| `/volumes` | GET | 書籍検索 | 高（メインで使用） |
-| `/volumes/{volumeId}` | GET | 書籍詳細取得 | 中（詳細画面で使用） |
-| `/mylibrary/*` | - | ユーザー本棚操作 | 対象外（OAuth 必須） |
+| エンドポイント        | メソッド | 用途             | 使用頻度             |
+| --------------------- | -------- | ---------------- | -------------------- |
+| `/volumes`            | GET      | 書籍検索         | 高（メインで使用）   |
+| `/volumes/{volumeId}` | GET      | 書籍詳細取得     | 中（詳細画面で使用） |
+| `/mylibrary/*`        | -        | ユーザー本棚操作 | 対象外（OAuth 必須） |
 
 本プロジェクトでは `/volumes` と `/volumes/{volumeId}` のみを使用する。
 
@@ -24,13 +24,13 @@
 
 `/volumes` の `q` パラメータでは、以下の特殊キーワードで検索対象を絞り込める。
 
-| 検索方法 | クエリ例 | 説明 |
-| --- | --- | --- |
-| 全文検索 | `q=Clean Code` | タイトル・著者・説明文などを横断検索 |
-| ISBN 検索 | `q=isbn:9780132350884` | ISBN-10 または ISBN-13 で検索 |
-| タイトル検索 | `q=intitle:リーダブルコード` | タイトルに含まれるキーワードで検索 |
-| 著者検索 | `q=inauthor:村上春樹` | 著者名で検索 |
-| 出版社検索 | `q=inpublisher:オライリー` | 出版社名で検索 |
+| 検索方法     | クエリ例                     | 説明                                 |
+| ------------ | ---------------------------- | ------------------------------------ |
+| 全文検索     | `q=Clean Code`               | タイトル・著者・説明文などを横断検索 |
+| ISBN 検索    | `q=isbn:9780132350884`       | ISBN-10 または ISBN-13 で検索        |
+| タイトル検索 | `q=intitle:リーダブルコード` | タイトルに含まれるキーワードで検索   |
+| 著者検索     | `q=inauthor:村上春樹`        | 著者名で検索                         |
+| 出版社検索   | `q=inpublisher:オライリー`   | 出版社名で検索                       |
 
 ### 組み合わせ検索
 
@@ -50,12 +50,12 @@ q=isbn:9784873115658
 
 ## 実務で使うリクエストパターン
 
-| 目的 | リクエスト例 |
-| --- | --- |
-| キーワードで本を検索 | `GET /volumes?q=Clean+Code&maxResults=10&key=API_KEY` |
-| ISBN で本を検索 | `GET /volumes?q=isbn:9780132350884&key=API_KEY` |
-| 日本語の本を検索 | `GET /volumes?q=TypeScript&langRestrict=ja&key=API_KEY` |
-| 検索結果から1冊の詳細を取得 | `GET /volumes/{volumeId}?key=API_KEY` |
+| 目的                        | リクエスト例                                            |
+| --------------------------- | ------------------------------------------------------- |
+| キーワードで本を検索        | `GET /volumes?q=Clean+Code&maxResults=10&key=API_KEY`   |
+| ISBN で本を検索             | `GET /volumes?q=isbn:9780132350884&key=API_KEY`         |
+| 日本語の本を検索            | `GET /volumes?q=TypeScript&langRestrict=ja&key=API_KEY` |
+| 検索結果から1冊の詳細を取得 | `GET /volumes/{volumeId}?key=API_KEY`                   |
 
 ## 注意事項
 
