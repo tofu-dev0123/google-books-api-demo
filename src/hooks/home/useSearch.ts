@@ -10,7 +10,8 @@ export default function useSearch() {
   };
 
   const onSearch = () => {
-    router.push("/search");
+    if (!keyword.trim()) return;
+    router.push(`/search?keyword=${encodeURIComponent(keyword.trim())}`);
   };
 
   return { keyword, handleInputChange, onSearch };

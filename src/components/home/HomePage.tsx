@@ -14,6 +14,8 @@ export default function HomePage() {
           className="flex-1 border-none shadow-none outline-none focus:ring-0 focus:outline-none"
           type="search"
           placeholder="本を検索する"
+          value={keyword}
+          onChange={(e) => handleInputChange(e)}
         />
         <div className="relative flex h-full w-10 items-center justify-center">
           <Image
