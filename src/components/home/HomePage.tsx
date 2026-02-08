@@ -2,7 +2,6 @@
 
 import useSearch from "@/hooks/home/useSearch";
 import Image from "next/image";
-import { useCallback } from "react";
 
 export default function HomePage() {
   const { keyword, handleInputChange, onSearch } = useSearch();
